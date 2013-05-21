@@ -1,0 +1,396 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+
+% Simpler bibsection for CV sections
+% (thanks to natbib for inspiration)
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newenvironment{bibsection}%
+        {\vspace{-\baselineskip}\begin{list}{}{%
+       \setlength{\leftmargin}{\bibhang}%
+       \setlength{\itemindent}{-\leftmargin}%
+       \setlength{\itemsep}{\bibsep}%
+       \setlength{\parsep}{\z@}%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+%% This gives us fun enumeration environments. compactitem will be nice.
+\usepackage{paralist}
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The title (name) with a horizontal rule under it
+%
+% Usage: \makeheading{name}
+%
+% Place at top of document. It should be the first thing.
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+% The section headings
+%
+% Usage: \section{section name}
+%
+% Follow this section IMMEDIATELY with the first line of the section
+% text. Do not put whitespace in between. That is, do this:
+%
+%       \section{My Information}
+%       Here is my information.
+%
+% and NOT this:
+%
+%       \section{My Information}
+%
+%       Here is my information.
+%
+% Otherwise the top of the section header will not line up with the top
+% of the section. Of course, using a single comment character (%) on
+% empty lines allows for the function of the first example with the
+% readability of the second example.
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+        
+% An itemize-style list with little space between items
+\newenvironment{innerinnerlist}[1][\enskip$\circ$]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Barend~J.~Leonard \hfill Curriculum Vitae}
+
+\section{Contact Information}
+%
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table.
+%
+% ALSO: \rcollength is the width of the right column of the table
+%       (adjust it to your liking; default is 1.85in).
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength}p{\rcollength}}
+\href{http://www.cs.up.ac.za/}%
+     {Department of Computer Science} & \textit{Cell:} (072) 613-6045 \\
+\href{http://www.up.ac.za/}{The University of Pretoria}
+                           & \textit{Work:} (012) 420-5242 \\
+Lynwood Rd.                &  \textit{E-mail:}\\
+Hatfield, Pretoria, South Africa    & \href{mailto:bleonard@cs.up.ac.za}{bleonard@cs.up.ac.za}\\ 
+\end{tabular}
+
+\section{Citizenship}
+%
+South Africa
+
+\section{Research Interests}
+%
+Computational intelligence, computer vision, human-computer interaction, data compression.
+
+\section{Education}
+%
+\href{http://www.up.ac.za/}{\textbf{The University of Pretoria}},
+Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{M.Sc. (\href{http://www.cs.up.ac.za/}{Computer Science})}} \hfill \textbf{Expected graduation date: November 2014}
+        \begin{innerlist}
+        \item \emph{Specialisation:} Computational intelligence
+        \item \emph{Thesis title:} Towards Self-Adaptive Particle Swarm Optimizers by Means of Cultural Evolution.
+        \item \emph{Supervisor:} \href{http://www.cs.up.ac.za/engel/}{Prof. A.P. Engelbrecht}\\
+        \end{innerlist}
+\end{outerlist}
+
+\href{http://www.up.ac.za/}{\textbf{The University of Pretoria}},
+Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{B.Sc. (Hons) (\href{http://www.cs.up.ac.za/}{Computer Science})}} \hfill \textbf{2011}
+        \begin{innerlist}
+        \item \emph{Areas of focus:} Computational intelligence, data mining, computer security, formal methods for algorithm construction and analysis, computer networks theory, research methods.
+        \item \emph{Research project title:} Empirical Analysis of Heterogeneous Particle Swarms in Dynamic Environments.
+        \item \emph{Supervisor:} \href{http://www.cs.up.ac.za/engel/}{Prof. A.P. Engelbrecht}\\
+        \end{innerlist}
+\end{outerlist}
+
+\href{http://www.up.ac.za/}{\textbf{The University of Pretoria}},
+Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{B.Sc. (\href{http://www.cs.up.ac.za/}{Computer Science})}} \hfill \textbf{2010}
+        \begin{innerlist}
+        \item \emph{Areas of focus:} Computational intelligence, programming language theory, computer networks, databases, discrete data structures, software engineering principles \& practices.
+        \item \emph{Programming languages:} Java, C, C++, JavaScript, PHP and others.\\
+        \end{innerlist}
+\end{outerlist}
+
+\href{}{\textbf{Ho\"erskool Garsfontein}}, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Matric}} \hfill \textbf{2004 - Passed with endorsement}
+        \begin{innerlist}
+        \item Mathematics HG
+        \item Science HG
+        \item Computer Studies HG
+        \item Afrikaans 1st language HG
+        \item English 2nd language HG
+        \item Accounting SG
+        \end{innerlist}
+\end{outerlist}
+\pagebreak
+\section{Work Experience}
+\href{http://www.up.ac.za}{\textbf{The University of Pretoria}}, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Senior Programmer and Researcher}} \hfill \textbf{January 2012 to  present}
+        \begin{innerlist}
+        \item Design, implementation and maintenance of a platform-independent cluster for the execution of large-scale computational intelligence experiments\\(including both server-side and client side programming and web design).
+        \item Configuration and maintenance of Unix servers and other computing infrastructure.
+        \item Contribution of code to the \href{http://www.cilib.net}{CILib} open-source computational intelligence library.
+        \item Presenting international workshops and tutorials on the use of CILib to conduct computational intelligence research.\\
+        \end{innerlist}
+\end{outerlist}
+\textit{Reference at the Department of Computer Science:} \hfill Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za) \\
+
+\href{http://www.up.ac.za}{\textbf{The University of Pretoria}}, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Research Assistant}} \hfill \textbf{March 2010 to  December 2011}
+        \begin{innerlist}
+        \item Implementation of modern computational intelligence algorithms for research purposes.
+        \item Contribution of code to the \href{http://www.cilib.net}{CILib} open-source computational intelligence library.\\
+        \end{innerlist}
+\end{outerlist}
+\textit{Reference at the Department of Computer Science:} \hfill Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za) \\
+
+\href{http://www.meraka.org.za}{\textbf{Meraka Institute}}, CSIR, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Software Engineer}} \hfill \textbf{March 2009 to  November 2009}
+        \begin{innerlist}
+        \item Designed and implemented a multi-user text based game engine (MUD) for Dr Math on MXit.
+        \item The project was done in partial fulfilment of a \textit{B.Sc. (Computer Science)} degree at the University of Pretoria.\\
+        \end{innerlist}
+\end{outerlist}
+\textit{Reference at CSIR Meraka Institute:} \hfill Laurie Butgereit (lbutgereit@csir.co.za) \\
+
+\href{http://www.up.ac.za}{\textbf{The University of Pretoria}}, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Laboratory Assistant}} \hfill \textbf{March 2008 to  February 2010}
+        \begin{innerlist}
+        \item Maintenance of computers and printers in the laboratory.
+        \item Providing assistance to students in any of the following areas:
+        \begin{innerinnerlist}
+        \item Logging onto campus network using Novell.
+        \item Use of word processors, spreadsheet applications and presentation design software (in both Windows and Linux environments).
+        \item Sending of e-mails using the university mail server, or third party mail servers such as GMail.
+        \item Provide support to the best of my ability on any other issues students may experience in the laboratory. \\
+        \end{innerinnerlist}
+        \end{innerlist}
+\end{outerlist}
+\textit{Reference at the UP Open Labs:} \hfill Retief Joyce (retief.joyce@up.ac.za)
+
+\pagebreak
+
+\section{Teaching Experience}
+\href{http://www.up.ac.za}{\textbf{The University of Pretoria}}, Pretoria, South Africa
+\begin{outerlist}
+\item[] \textbf{\textit{Third Year and Honours Teaching}} \hfill \textbf{2012 to present}
+        \begin{innerlist}
+        \item Lectures on the use and development of the CiLib computational intelligence library. \\
+        \end{innerlist}
+\end{outerlist}
+
+\href{http://www.ufpe.br/english/}{\textbf{University of Pernambuco}}, Recife, Brazil
+\begin{outerlist}
+\item[] \textbf{\textit{Third Year and Honours Teaching}} \hfill \textbf{2012}
+        \begin{innerlist}
+        \item Presented a series of tutorials on the use and development of the CiLib open source computational intelligence library. \\
+        \end{innerlist}
+\end{outerlist}
+
+\href{http://brocku.ca}{\textbf{Brock University}}, Toronto, Canada
+\begin{outerlist}
+\item[] \textbf{\textit{Honours Teaching}} \hfill \textbf{2011}
+        \begin{innerlist}
+        \item Presented a series of tutorials on the use and development of the CiLib open source computational intelligence library. \\
+        \end{innerlist}
+\end{outerlist}
+
+%
+\section{Publications} \begin{bibsection}
+    \item Leonard, B. and Engelbrecht, A. On the optimality of Particle Swarm Optimizers in Dynamic Environments. \emph{2013 Congres on Evolutionary Computation}, 2013.
+	\item Leonard, B. and Engelbrecht, A. Scalability study of Particle Swarms in Dynamic Environments. \emph{ANTS 2012}, 2012.
+    \item Leonard, B. and Engelbrecht, A. and Van Wyk, A. Heterogeneous particle swarms in dynamic environments. \emph{2011 IEEE Symposium on Swarm Intelligence}, 2011.
+    \item Butgereit, L. and Leonard, B. {\it et al}. Dr Math gets MUDDY: the ``dirt" on how to attract teenagers to mathematics and science by using multi-user dungeon games over Mxit on cell phones. \emph{IST Africa 2010}, 2010.
+\end{bibsection}
+
+\section{Technical\\ Skills}
+%
+\textbf{Programming Languages and Tools:} Java, C, C++, JavaScript, PHP, Python, UNIX
+        shell scripting, git, maven, sbt, Netbeans, Eclipse and others.
+
+\blankline
+
+\textbf{Databases:} SQL, mySQL, MongoDB.
+
+\blankline
+
+\textbf{Applications:} \LaTeX{}, B\textsc{ib}\TeX{}, Microsoft Office, Open Office, Libre Office, and other common productivity packages for Windows and Linux platforms.
+
+\blankline
+
+\textbf{Operating Systems:} Linux and other UNIX variants, Microsoft Windows XP, Windows Vista / Windows 7 / Windows 8.
+
+\blankline
+
+\textbf{Networking:} Extensive experience in setting up and maintaining wired and wireless networks; Experience programming CISCO routers via telnet in WAN environments; Experience installing and configuring Mikrotik routers via WinBox in both LAN and WAN environments.
+
+\blankline
+
+\textbf{Hardware:} Solid knowledge of computer components and experience in building a variety of computer systems.
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
