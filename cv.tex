@@ -91,6 +91,9 @@
 %% This gives us fun enumeration environments. compactitem will be nice.
 \usepackage{paralist}
 
+%% ifthenelse
+\usepackage{ifthen}
+
 %% Reference the last page in the page number
 %
 % NOTE: comment the +LP line and uncomment the -LP line to have page
@@ -200,6 +203,13 @@
 \newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
 \newcommand\doi[1]{doi:\doilink{#1}}
 
+%references
+\def\includereferences{no}
+\newcommand{\reference}[2]{
+	\emph{Reference at #2:}
+	\hfill\ifthenelse{\equal{\includereferences}{yes}}{#1}{\emph{Available on request}}
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -233,7 +243,7 @@ South Africa
 
 \section{Background}
 %
-I am a computer scientist with a deep understanding and working knowledge of a wide range of computational intelligence techniques. I am especially familiar with the application of swarm intelligence to machine learning. I have worked under the supervision of Prof. Engelbrecht at the University of Pretoria for the past four years. During this time I was required to implement and test many existing and newly developed computational intelligence algorithms. In addition, I was the lead author of a number of publications that were presented at leading international conferences on computational intelligence. Prof. Engelbrecht is a world leader in the field of computational swarm intelligence and is currently the only A-rated computer scientist in South Africa. I am currently registered for an M.Sc. in computational intelligence under his supervision.
+I am a computer scientist with a deep understanding and working knowledge of a wide range of computational intelligence techniques. I am especially familiar with the application of swarm intelligence to machine learning. I have been working at the University of Pretoria for the past four years. During this time I was required to implement and test many existing and newly developed computational intelligence algorithms. In addition, I was the lead author of a number of publications that were presented at leading international conferences on computational intelligence. My supervisor is a world leader in the field of computational swarm intelligence and is currently the only A-rated computer scientist in South Africa. I am currently registered for an M.Sc. in computational intelligence under his supervision.
 
 ~~~~I enjoy analysing and critiquing existing algorithms and solving problems in the context of computational intelligence. I have excellent report writing skills and a broad range of scientific interests. Finding an industry position where I can apply my knowledge to real-world problems would be ideal for me.
 
@@ -316,7 +326,7 @@ North Carolina, United States of America
         \item Presenting international workshops and tutorials on the use of CILib when conducting computational intelligence research.\\
         \end{innerlist}
 \end{outerlist}
-\textit{Reference at the Department of Computer Science:} \hfill Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za) \\
+\reference{Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za)}{the Department of Computer Science} \\
 
 \pagebreak
 \href{http://www.up.ac.za}{\textbf{The University of Pretoria}}, Pretoria, South Africa
@@ -327,7 +337,7 @@ North Carolina, United States of America
         \item Contribution of code to the \href{http://www.cilib.net}{CILib} open-source computational intelligence library.\\
         \end{innerlist}
 \end{outerlist}
-\textit{Reference at the Department of Computer Science:} \hfill Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za) \\
+\reference{Prof. A.P. Engelbrecht \\ .\hfill (engel@cs.up.ac.za)}{the Department of Computer Science} \\
 
 \href{http://www.meraka.org.za}{\textbf{Meraka Institute}}, CSIR, Pretoria, South Africa
 \begin{outerlist}
@@ -337,7 +347,7 @@ North Carolina, United States of America
         \item The project was done in partial fulfilment of a \textit{B.Sc. (Computer Science)} degree at the University of Pretoria.\\
         \end{innerlist}
 \end{outerlist}
-\textit{Reference at CSIR Meraka Institute:} \hfill Laurie Butgereit (lbutgereit@csir.co.za) \\
+\reference{Laurie Butgereit (lbutgereit@csir.co.za)}{CSIR Meraka Institute} \\
 
 %\pagebreak
 
@@ -355,7 +365,7 @@ North Carolina, United States of America
         \end{innerinnerlist}
         \end{innerlist}
 \end{outerlist}
-\textit{Reference at the UP Open Labs:} \hfill Retief Joyce (retief.joyce@up.ac.za)
+\reference{Retief Joyce (retief.joyce@up.ac.za)}{the UP Open Labs}
 
 
 \section{Teaching Experience}
